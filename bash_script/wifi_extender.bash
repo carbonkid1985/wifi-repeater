@@ -9,7 +9,7 @@
 
 # Script must run as root
 if [[ $EUID -gt 0 ]]; then # we can compare directly with this syntax.
-    echo "Please run as root/sudo"
+    echo "Please run as root"
     exit 1
 fi
 
@@ -91,7 +91,7 @@ setup_systemd_networkd() {
 
 config_wpsup() {
     {
-        echo "country=IN"
+        echo "country=GB"
         echo "ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev"
         echo "update_config=1"
         echo "network={"
@@ -112,7 +112,7 @@ config_wpsup() {
 
 setup_wlan1_client() {
     {
-        echo "country=IN"
+        echo "country=GB"
         echo "ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev"
         echo "update_config=1"
         echo "network={"
