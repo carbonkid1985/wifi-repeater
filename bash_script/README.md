@@ -5,8 +5,8 @@
 <ol>
 <li>Connect to Access point created by the Raspberry Pi.</li>
 <li>Clone the repo and navigate to bash_script directory</a></li>
-<li>make it executable<code>chmod +x ./wifi_extender.bash</code></li>
-<li>Run the script <code>./wifi_extender.bash</code></code>
+<li>make it executable <code>chmod +x ./wifi_extender.bash</code></li>
+<li>Run the script <code>./wifi_extender.bash</code></code></li>
 <li>Follow the instructions. Fill in the <code>SSID</code> and the <code>psk</code></li>
 <li>Wait for some time(2-3 minutes). Pi will restart itself and now it is good to go!</li>
 </ol>
