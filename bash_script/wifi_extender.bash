@@ -8,7 +8,7 @@
 
 
 # Script must run as root
-if [[ $EUID -gt 0 ]]; then # we can compare directly with this syntax.
+if [[ $(/usr/bin/id -u) -gt 0 ]]; then # we can compare directly with this syntax.
     echo "Please run as root"
     exit 1
 fi
