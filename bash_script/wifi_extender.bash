@@ -21,7 +21,7 @@ WLAN1="wlan1"
 
 # Config files, don't change
 wp0conf="/etc/wpa_supplicant/wpa_supplicant-wlan0.conf"
-ws_wlan1="/etc/wpa_supplicant/wpa_supplicant-wlan1.conf"
+wp1conf="/etc/wpa_supplicant/wpa_supplicant-wlan1.conf"
 wlan0_network="/etc/systemd/network/08-wlan0.network"
 wlan1_network="/etc/systemd/network/12-wlan1.network"
 
@@ -81,8 +81,8 @@ check_interfaces() {
 
 setup_systemd_networkd() {
     systemctl mask networking.service dhcpcd.service
-    mv /etc/network/{interfaces,interfaces~} # Backup file
-    cp /etc/{resolv.conf,resolv.conf~}
+    mv /etc/network/{interfaces,interfaces.bac} # Backup file
+    cp /etc/{resolv.conf,resolv.conf.bak}
     sed -i '1i resolvconf=NO' /etc/resolvconf.conf
     systemctl enable systemd-networkd.service systemd-resolved.service
     ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf
@@ -102,6 +102,7 @@ config_wpsup() {
         echo "  frequency=2412"
         echo "}"
     } > $wp0conf
+
     chmod 600 $wp0conf
     # Restart wpa_supplicant service
     systemctl disable wpa_supplicant.service
@@ -119,9 +120,9 @@ setup_wlan1_client() {
         echo '  ssid="'$ORIGINAL_SSID'"'
         echo '  psk='`generate_wpa2_psk $ORIGINAL_SSID $ORIGINAL_PASS`
         echo "}"
-    } > $ws_wlan1
+    } > $wp1conf
 
-    chmod 600 $ws_wlan1
+    chmod 600 $wp1conf
     systemctl disable wpa_supplicant.service
     systemctl enable wpa_supplicant@wlan1.service
 }
@@ -172,13 +173,13 @@ install() {
 
 uninstall() {
     echo "Uninstalling..."
-    rm -rf $wp0conf $ws_wlan1 $wlan0_network $wlan1_network
+    rm -rf $wp0conf $wp1conf $wlan0_network $wlan1_network
     systemctl unmask networking.service dhcpcd.service
-    mv /etc/network/{interfaces~,interfaces} # restore file
+    mv /etc/network/{interfaces.bak,interfaces} # restore file
     systemctl disable systemd-networkd.service systemd-resolved.service wpa_supplicant@wlan0.service wpa_supplicant@wlan1.service
     systemctl enable wpa_supplicant.service
     rm -rf /etc/resolv.conf
-    cp /etc/{resolv.conf~,resolv.conf}
+    cp /etc/{resolv.conf.bak,resolv.conf}
     echo "done. rebooting..."
     sleep 2
     /sbin/reboot
@@ -192,7 +193,7 @@ echo "This script will turn your Raspberry pi into wifi extender! (repeater)"
 echo "Please choose your plan"
 echo "1. Install / reinstall"
 echo "2. Uninstall"
-echo "3. cancel"
+echo "3. Exit"
 while true; do
     read -p "Please choose: " answer
     case $answer in
