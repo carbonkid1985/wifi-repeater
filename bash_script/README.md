@@ -1,5 +1,5 @@
 <h1 id="bash_script">Bash script</h1>
-<p>This bash script is specifically designed to connect to a WiFi AP using simple command with no dependencies! </p>
+<p>This bash script is specifically designed to connect to a WiFi AP using simple command with no dependencies!</p>
 
 <h2 id="usage">Usage</h2>
 <ol>
@@ -7,7 +7,7 @@
 <li>Clone the repo and navigate to bash_script directory</a></li>
 <li>make it executable<code>chmod +x ./wifi_extender.bash</code></li>
 <li>Run the script <code>./wifi_extender.bash</code></code>
-<li>Follow the instructions. Fill up the <code>SSID</code> and the <code>psk</code></li>
+<li>Follow the instructions. Fill in the <code>SSID</code> and the <code>psk</code></li>
 <li>Wait for some time(2-3 minutes). Pi will restart itself and now it is good to go!</li>
 </ol>
 
